@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link type="stylesheet" href="{{static_url}}/session_words/css/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+	<div>
+
+		<p> BE SURE TO COMPLETE ALL THE INPUTS OR ELSE-- this page has no validation</p>
+		<form method="POST" action="add_word">
+		Add a word: <input type="text" name="word" value=""><br>
+		Choose a color:<br>
+		<ul>
+			<li><input type="radio" name="color" value="red" checked="checked">red</li>
+			<li><input type="radio" name="color" value="green">green</li>
+			<li><input type="radio" name="color" value="blue">blue</li>
+		</ul>
+		<br>
+		<input type="checkbox" name="size" value="True"> Show in BIG FONT!<br>
+		<input type="hidden" name="process" value="add">
+		<input type="hidden" name="content" value="{{ request.session.content }}">
+		<input type="submit" value="ADD To SESsOIN">
+		{% csrf_token %}
+		
+		</form>
+	</div>
+	<div>
+		<form method="POST" action="reset_session">
+		 {% csrf_token %}	
+		{% for i in request.session.content %}
+			<font style="color: {{i.color}}; font-size: {{i.font_weight}}px;">{{ i.word }}</font> {{ i.dt_time }}<br><br>
+		 {% endfor %}
+		<input type="hidden" name="process" value="add">
+		<input type="submit" value="RESET SESSION">
+		</form>
+	</div>
+
+	</div>
+</body>
+
+</html>
